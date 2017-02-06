@@ -15,3 +15,8 @@ def parsexml(filename):
     return notags
 
 parsexml('hindi-document-00001.xml')
+
+
+
+with open("test.txt", "a") as myfile:
+    myfile.write(parsexml('hindi-document-00001.xml'))

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #InvertedIndex uses a table-lookup method, storing the stems along with the index in a Python dictionary
 #In our case is word_index() that consist of word_split(), normalization and the deletion of stop words ("the", "then", "that"...).
 
@@ -28,16 +29,11 @@ def hi_stem(word):
     for L in 5, 4, 3, 2, 1:
         if len(word) > L + 1:
             for suf in suffixes[L]:
-                if word.endswith(suf):
+                if word.endswith(suf.decode('utf-8')):
                     return word[:-L]
     return word
 
-if __name__ == '__main__':
-    import sys
-    if len(sys.argv) != 1:
-        sys.exit('{} takes no arguments'.format(sys.argv[0]))
-    for line in sys.stdin:
-        print([hi_stem(word) for word in line.split()])
+
 
 #end of stemmer
 
@@ -66,6 +62,7 @@ def word_split(text):
 
 #elemenating the words from the word list which are a part of stop words
 
+
 def words_cleanup(words):
     cleaned_words = []
     for index, word in words:
@@ -74,9 +71,6 @@ def words_cleanup(words):
         hi_stem(word)
         cleaned_words.append((index, word))
     return cleaned_words
-
-
-
 
 
 def words_normalize(words):
@@ -94,8 +88,6 @@ def word_index(text):
     return words
 
 
-
-
 def inverted_index(text):
     inverted = {}
 
@@ -107,7 +99,10 @@ def inverted_index(text):
 
 
 
-#The function above takes a Multi-Document Inverted index and a query, and returns the set of documents that contains all the words that you've searched.
+
+
+
+#The function below takes a Multi-Document Inverted index and a query, and returns the set of documents that contains all the words that you've searched.
 
 
 def inverted_index_add(inverted, doc_id, doc_index):
@@ -115,3 +110,21 @@ def inverted_index_add(inverted, doc_id, doc_index):
         indices = inverted.setdefault(word, {})
         indices[doc_id] = locations
     return inverted
+
+
+if __name__ == '__main__':
+    import sys
+    if len(sys.argv) != 1:
+        sys.exit('{} takes no arguments'.format(sys.argv[0]))
+    #for line in sys.stdin:
+        #print([hi_stem(word) for word in line.split()])
+
+    # inverted text file
+
+    str = open('test.txt', 'r').read()
+
+    print inverted_index(str.decode('utf-8'))
+
+
+
+
