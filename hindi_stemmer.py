@@ -39,4 +39,4 @@ if __name__ == '__main__':
     if len(sys.argv) != 1:
         sys.exit('{} takes no arguments'.format(sys.argv[0]))
     for line in sys.stdin:
-        print(*[hi_stem(word) for word in line.split()])
+        print([hi_stem(word) for word in line.split()])
