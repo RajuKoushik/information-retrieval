@@ -8,6 +8,8 @@
 
 import unicodedata
 
+import os
+
 
 stopWordsFile = open('stopwords.txt', 'r')
 stopWordsList = [line.split(',') for line in stopWordsFile.readlines()]
@@ -116,7 +118,7 @@ def inverted_index_add(inverted, doc_id, doc_index):
 
 
 def get_indexes_word(str):
-    hash_words = inverted_index(str.decode('utf-8'))
+    hash_words = inverted_index(str)
 
 
 
@@ -133,8 +135,32 @@ if __name__ == '__main__':
     print(a)
 
     str = open('test.txt', 'r').read()
+    final_inverted_index = {}
+
+
+
+
+
 
     print (inverted_index(str))
+
+    #rootdir is the directory of the target folders
+    rootdir = ''
+
+    #the below snippet loops over directories of the folder and appends the inverted index
+
+    for subdir, dirs, files in os.walk(rootdir):
+        for file in files:
+            # print os.path.join(subdir, file)
+            filepath = subdir + os.sep + file
+
+            if filepath.endswith(".txt"):
+                #print (filepath)
+                open_file = open(file, 'r').read()
+                final_inverted_index.update(inverted_index(open_file))
+
+    #final_inverted_index is the object which contains the inverted indexof all the files
+
 
 #store the data into a binary file
 
