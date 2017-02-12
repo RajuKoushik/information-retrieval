@@ -145,7 +145,7 @@ if __name__ == '__main__':
     print (inverted_index(str))
 
     #rootdir is the directory of the target folders
-    rootdir = ''
+    rootdir = os.getcwd()
 
     #the below snippet loops over directories of the folder and appends the inverted index
 
